@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
-import { DEMO_OTP, checkOtp, isValidMobile, setDemoPhone } from '@/lib/mock-auth';
+import { isValidMobile, setDemoPhone } from '@/lib/mock-auth';
+import { sendOtp, verifyOtp } from '@/lib/otp.functions';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/login')({
@@ -24,32 +25,33 @@ function Login() {
   const [error, setError] = useState('');
   const phone = `+91${mobile}`;
 
-  async function sendOtp() {
+  async function handleSendOtp() {
     if (!isValidMobile(mobile)) return setError('Enter a valid 10-digit mobile number.');
     setBusy(true); setError('');
-    await new Promise(r => setTimeout(r, 600));
-    setBusy(false); setSent(true);
+    const result = await sendOtp({ data: { mobile } });
+    setBusy(false);
+    if (!result.sent) return setError(result.error ?? 'Could not send the OTP. Please try again.');
+    setSent(true);
   }
   async function verify() {
     setBusy(true); setError('');
-    await new Promise(r => setTimeout(r, 400));
+    const result = await verifyOtp({ data: { mobile, otp: code } });
     setBusy(false);
-    if (!checkOtp(code)) return setError('Incorrect OTP. Please try again.');
+    if (!result.verified) return setError(result.error ?? 'Incorrect OTP. Please try again.');
     setDemoPhone(phone); navigate({ to: '/' });
   }
 
   return <div className="page-width login-page">
-    <h1>Login</h1><span className="demo-badge">Demo mode · no SMS is sent</span>
+    <h1>Login</h1>
     <p className="text-muted-foreground">{sent ? `Enter the 6-digit code sent to ${phone}.` : 'Enter your mobile number. We will send you a one-time code.'}</p>
     {!sent ? <>
       <div className="phone-row"><span>+91</span><input inputMode="numeric" maxLength={10} aria-label="Mobile number" placeholder="98765 43210" value={mobile} onChange={e => setMobile(e.target.value.replace(/\D/g, ''))} /></div>
-      <Button disabled={busy} onClick={sendOtp}>{busy ? 'Sending…' : 'Send OTP'}</Button>
+      <Button disabled={busy} onClick={handleSendOtp}>{busy ? 'Sending…' : 'Send OTP'}</Button>
     </> : <>
       <input inputMode="numeric" maxLength={6} aria-label="OTP code" placeholder="6-digit code" value={code} onChange={e => setCode(e.target.value.replace(/\D/g, ''))} />
       <Button disabled={busy || code.length !== 6} onClick={verify}>{busy ? 'Verifying…' : 'Verify & login'}</Button>
       <Button variant="link" onClick={() => { setSent(false); setCode(''); }}>Change number</Button>
     </>}
-    {sent && <p className="text-sm text-muted-foreground">Demo OTP: <strong>{DEMO_OTP}</strong></p>}
     {error && <p className="login-error">{error}</p>}
   </div>;
 }
