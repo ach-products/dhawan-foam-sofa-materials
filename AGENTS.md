@@ -30,10 +30,10 @@ use the editor.
 <!-- LOVABLE:END -->
 
 ## Catalogue architecture
-- Keep the sample catalogue in a shared browser-safe module; grid and detail pages must use the same product specifications.
-- Keep category options and specification labels in the shared catalogue module; public browsing and the demo editor must support the same materials.
-- Keep enquiry selections in the shared shell's React context; this catalogue exports enquiry lists and does not submit orders or represent enquiries as sent.
+- Keep category options, specification labels, and pure pricing/filtering helpers in the shared browser-safe `src/lib/catalogue.ts` module; grid and detail pages must use the same product specifications and helpers.
+- Product data is production data, stored in the Supabase Postgres database (`products` table) managed via `src/lib/products.functions.ts` and the `/admin` panel. The static `products` array in `catalogue.ts` is seed/reference data only (used by `scripts/setup-db.mjs`), not the live source for the public catalogue's own admin-managed state.
+- Keep enquiry selections in the shared shell's React context. Submitting an enquiry calls `src/lib/enquiries.functions.ts`, which inserts a real row into the `enquiries` table — this is a real submission, not a demo action. "Download bill" remains a separate, secondary action that only exports a local copy.
 
-## Admin preview architecture
-- Keep the admin preview at `/admin` with its own shell and in-memory demo data; it must not change the public catalogue or imply real authentication or persistent saving.
-- Reuse the browser-safe sample catalogue to initialize the admin preview so product specifications remain consistent.
+## Admin panel architecture
+- The admin panel at `/admin` manages real, persistent product data via `src/lib/products.functions.ts` (backed by the `products` table in the production Supabase database) — edits, publishing, and deletes are permanent, not in-memory or demo state.
+- Server-only secrets (`BLACKSMS_API_KEY`, `BLACKSMS_SENDER_ID`, `OTP_SIGNING_SECRET`, `POSTGRES_*`, `SUPABASE_SERVICE_ROLE_KEY`) live in `.env.local` (gitignored) for local dev and in each deployment platform's own env var store (Vercel, and Lovable Secrets for the Lovable Cloud build) — never in a committed file.
