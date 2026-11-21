@@ -5,13 +5,15 @@ import {
   createRootRouteWithContext,
   useRouter,
   useLocation,
+  useNavigate,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import { CatalogueShell } from "@/components/catalogue-shell";
+import { getDemoPhone } from "@/lib/mock-auth";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -121,14 +123,36 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function RequireLogin({ children }: { children: ReactNode }) {
+  const navigate = useNavigate();
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    function check() {
+      if (getDemoPhone()) setReady(true);
+      else navigate({ to: "/login" });
+    }
+    check();
+    window.addEventListener("demo-auth", check);
+    return () => window.removeEventListener("demo-auth", check);
+  }, [navigate]);
+  if (!ready) return <div className="page-width auth-gate">Checking your session…</div>;
+  return <>{children}</>;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const isAdmin = useLocation({ select: location => location.pathname === '/admin' });
+  const pathname = useLocation({ select: location => location.pathname });
+  const isAdmin = pathname === "/admin";
+  const isLogin = pathname === "/login";
 
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      {isAdmin ? <Outlet /> : <CatalogueShell><Outlet /></CatalogueShell>}
+      {isAdmin ? <Outlet /> : (
+        <CatalogueShell>
+          {isLogin ? <Outlet /> : <RequireLogin><Outlet /></RequireLogin>}
+        </CatalogueShell>
+      )}
     </QueryClientProvider>
   );
 }

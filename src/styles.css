@@ -252,6 +252,7 @@ a {text-decoration:none;color:inherit;}button,input,select {font:inherit;}button
 .phone-row{display:flex;gap:.5rem;align-items:center}
 .login-error{color:var(--destructive);font-size:.85rem}
 .demo-badge{justify-self:start;font-size:.75rem;padding:.25rem .6rem;border-radius:999px;background:var(--muted);color:var(--muted-foreground)}
+.auth-gate{padding:4rem 0;text-align:center;color:var(--muted-foreground)}
 .detail-price small{font-size:.55em;font-weight:500;color:var(--muted-foreground)}
 .detail-calc{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.9rem 1rem;margin:1rem 0 .75rem;border:1px solid var(--border);border-radius:.5rem;background:var(--muted)}
 .detail-calc span{color:var(--muted-foreground);font-size:.9rem}
