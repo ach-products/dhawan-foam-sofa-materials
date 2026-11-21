@@ -15,8 +15,17 @@ async function callBlackSms(path: string, params: Record<string, string>) {
   const url = new URL(path, BLACKSMS_BASE);
   for (const [key, value] of Object.entries(params)) url.searchParams.set(key, value);
   const response = await fetch(url, { headers: { Authorization: getApiKey() } });
-  const data = (await response.json().catch(() => ({}))) as BlackSmsResponse;
-  return { ok: response.ok && data.status !== 0, message: typeof data.message === "string" ? data.message : undefined };
+  const text = await response.text();
+  let data: BlackSmsResponse;
+  try {
+    data = (JSON.parse(text || "{}") as BlackSmsResponse) ?? {};
+  } catch {
+    console.error(`[blacksms] ${path} returned non-JSON (status ${response.status}):`, text.slice(0, 500));
+    throw new Error(`BlackSMS returned an unexpected response (status ${response.status}). Please try again shortly.`);
+  }
+  const ok = response.ok && data.status !== 0;
+  if (!ok) console.error(`[blacksms] ${path} failed (status ${response.status}):`, data);
+  return { ok, message: typeof data.message === "string" ? data.message : undefined };
 }
 
 export async function sendOtpSms(mobile: string) {
