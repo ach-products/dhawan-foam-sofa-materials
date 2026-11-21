@@ -43,13 +43,13 @@ function Login() {
 
   return <div className="page-width login-page">
     <h1>Login</h1>
-    <p className="text-muted-foreground">{sent ? `Enter the 6-digit code sent to ${phone}.` : 'Enter your mobile number. We will send you a one-time code.'}</p>
+    <p className="text-muted-foreground">{sent ? `Enter the code sent to ${phone}.` : 'Enter your mobile number. We will send you a one-time code.'}</p>
     {!sent ? <>
       <div className="phone-row"><span>+91</span><input inputMode="numeric" maxLength={10} aria-label="Mobile number" placeholder="98765 43210" value={mobile} onChange={e => setMobile(e.target.value.replace(/\D/g, ''))} /></div>
       <Button disabled={busy} onClick={handleSendOtp}>{busy ? 'Sending…' : 'Send OTP'}</Button>
     </> : <>
-      <input inputMode="numeric" maxLength={6} aria-label="OTP code" placeholder="6-digit code" value={code} onChange={e => setCode(e.target.value.replace(/\D/g, ''))} />
-      <Button disabled={busy || code.length !== 6} onClick={verify}>{busy ? 'Verifying…' : 'Verify & login'}</Button>
+      <input inputMode="numeric" maxLength={8} aria-label="OTP code" placeholder="OTP code" value={code} onChange={e => setCode(e.target.value.replace(/\D/g, ''))} />
+      <Button disabled={busy || code.length < 4} onClick={verify}>{busy ? 'Verifying…' : 'Verify & login'}</Button>
       <Button variant="link" onClick={() => { setSent(false); setCode(''); }}>Change number</Button>
     </>}
     {error && <p className="login-error">{error}</p>}
