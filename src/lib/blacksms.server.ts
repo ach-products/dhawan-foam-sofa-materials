@@ -1,13 +1,15 @@
-// Server-only: calls the BlackSMS gateway with a secret API key.
+// Server-only: sends an SMS through BlackSMS with a secret API key.
 // Never import this at the top of a route file or a *.functions.ts module — those ship to the
 // client bundle. Load it with `await import(...)` inside a server function handler instead.
 //
-// Per https://blacksms.in/otp-docs: a FAILED result still comes back as HTTP 200, so the
-// "status" field ("SUCCESS" | "FAILED", a string, not a number) is the only reliable signal.
-// The human-readable detail field is "remarks", not "message".
+// Uses POST /sms (the "OTP Send API") to deliver a code WE generate (src/lib/otp-challenge.server.ts),
+// rather than BlackSMS's own /getotp + /validateotp pair, whose response leg returned a Cloudflare
+// 502 in testing even when the SMS was actually delivered (confirmed on the BlackSMS dashboard).
+// Per https://blacksms.in/docs, /sms responds {"status": 1 | 0, "message": "..."} and takes the
+// raw key in Authorization (no "Bearer" prefix) — a different shape/header than /getotp.
 const BLACKSMS_BASE = "https://blacksms.in";
 
-type BlackSmsResponse = { status?: string; remarks?: string; [key: string]: unknown };
+type SmsResponse = { status?: number; message?: string; [key: string]: unknown };
 
 function getApiKey(): string {
   const key = process.env["BLACKSMS_API_KEY"];
@@ -15,29 +17,28 @@ function getApiKey(): string {
   return key;
 }
 
-async function callBlackSms(path: string, params: Record<string, string>) {
-  const url = new URL(path, BLACKSMS_BASE);
-  for (const [key, value] of Object.entries(params)) url.searchParams.set(key, value);
-  const response = await fetch(url, { headers: { Authorization: `Bearer ${getApiKey()}` } });
+function getSenderId(): string {
+  const senderId = process.env["BLACKSMS_SENDER_ID"];
+  if (!senderId) throw new Error("Missing BLACKSMS_SENDER_ID environment variable.");
+  return senderId;
+}
+
+export async function sendOtpCodeSms(mobile: string, code: string): Promise<void> {
+  const response = await fetch(new URL("/sms", BLACKSMS_BASE), {
+    method: "POST",
+    headers: { Authorization: getApiKey(), "Content-Type": "application/json" },
+    body: JSON.stringify({ sender_id: getSenderId(), variables_values: code, numbers: mobile, route: 1 }),
+  });
   const text = await response.text();
-  let data: BlackSmsResponse;
+  let data: SmsResponse;
   try {
-    data = (JSON.parse(text || "{}") as BlackSmsResponse) ?? {};
+    data = (JSON.parse(text || "{}") as SmsResponse) ?? {};
   } catch {
-    console.error(`[blacksms] ${path} returned non-JSON (status ${response.status}):`, text.slice(0, 500));
+    console.error(`[blacksms] /sms returned non-JSON (status ${response.status}):`, text.slice(0, 500));
     throw new Error(`BlackSMS returned an unexpected response (status ${response.status}). Please try again shortly.`);
   }
-  const ok = response.ok && data.status === "SUCCESS";
-  if (!ok) console.error(`[blacksms] ${path} failed (status ${response.status}):`, data);
-  return { ok, message: typeof data.remarks === "string" && data.remarks ? data.remarks : undefined };
-}
-
-export async function sendOtpSms(mobile: string) {
-  const { ok, message } = await callBlackSms("/getotp", { mobileno: mobile });
-  if (!ok) throw new Error(message ?? "Could not send the OTP. Please try again.");
-}
-
-export async function verifyOtpSms(mobile: string, otp: string) {
-  const { ok, message } = await callBlackSms("/validateotp", { otp, mobileno: mobile });
-  if (!ok) throw new Error(message ?? "Incorrect OTP. Please try again.");
+  if (!response.ok || data.status !== 1) {
+    console.error(`[blacksms] /sms failed (status ${response.status}):`, data);
+    throw new Error(typeof data.message === "string" && data.message ? data.message : "Could not send the OTP. Please try again.");
+  }
 }

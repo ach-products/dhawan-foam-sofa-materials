@@ -20,6 +20,7 @@ function Login() {
   const navigate = useNavigate();
   const [mobile, setMobile] = useState('');
   const [code, setCode] = useState('');
+  const [token, setToken] = useState('');
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -31,11 +32,11 @@ function Login() {
     const result = await sendOtp({ data: { mobile } });
     setBusy(false);
     if (!result.sent) return setError(result.error ?? 'Could not send the OTP. Please try again.');
-    setSent(true);
+    setToken(result.token); setSent(true);
   }
   async function verify() {
     setBusy(true); setError('');
-    const result = await verifyOtp({ data: { mobile, otp: code } });
+    const result = await verifyOtp({ data: { mobile, otp: code, token } });
     setBusy(false);
     if (!result.verified) return setError(result.error ?? 'Incorrect OTP. Please try again.');
     setDemoPhone(phone); navigate({ to: '/' });
