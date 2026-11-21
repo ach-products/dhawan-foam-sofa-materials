@@ -13,26 +13,26 @@ describe('Catalogue scope', () => {
     expect(products.every(p => /^₹\d/.test(p.price))).toBe(true);
   });
   it('searches product names without case sensitivity', () => {
-    expect(filterProducts('All products', 'HIGH RESILIENCE').map(p => p.slug)).toEqual(['high-resilience-foam']);
+    expect(filterProducts(products, 'All products', 'HIGH RESILIENCE').map(p => p.slug)).toEqual(['high-resilience-foam']);
   });
   it('filters sofa legs independently', () => {
-    expect(filterProducts('Sofa Legs', '').map(p => p.slug)).toEqual(['chrome-sofa-legs']);
+    expect(filterProducts(products, 'Sofa Legs', '').map(p => p.slug)).toEqual(['chrome-sofa-legs']);
   });
   it('filters upholstery fabrics independently', () => {
-    expect(filterProducts('Fabrics', '').map(p => p.slug)).toEqual(['upholstery-fabrics']);
+    expect(filterProducts(products, 'Fabrics', '').map(p => p.slug)).toEqual(['upholstery-fabrics']);
   });
   it('filters staple pin series independently', () => {
-    expect(filterProducts('Staple Pins', '').map(p => p.slug)).toEqual(['80-series-staple-pins', '71-series-staple-pins']);
+    expect(filterProducts(products, 'Staple Pins', '').map(p => p.slug)).toEqual(['80-series-staple-pins', '71-series-staple-pins']);
   });
   it('filters adhesive products independently', () => {
-    expect(filterProducts('Adhesives', '').map(p => p.slug)).toEqual(['foam-contact-adhesive', 'fevicol-type-adhesive', 'bulk-adhesive-drum-pack', 'sofa-repair-adhesive', 'spray-adhesive', 'water-based-foam-glue']);
+    expect(filterProducts(products, 'Adhesives', '').map(p => p.slug)).toEqual(['foam-contact-adhesive', 'fevicol-type-adhesive', 'bulk-adhesive-drum-pack', 'sofa-repair-adhesive', 'spray-adhesive', 'water-based-foam-glue']);
   });
   it('supplies adhesives in bulk cans, buckets and drums', () => {
-    expect(filterProducts('Adhesives', 'drum').map(p => p.slug)).toEqual(['bulk-adhesive-drum-pack']);
+    expect(filterProducts(products, 'Adhesives', 'drum').map(p => p.slug)).toEqual(['bulk-adhesive-drum-pack']);
     expect(products.filter(p => p.category === 'Adhesives').every(p => /\d+\s?(L|ml)/.test(p.sizes))).toBe(true);
   });
   it('includes additional foam qualities', () => {
-    expect(filterProducts('Foams', '').filter(p => p.name.includes('Density')).map(p => p.density)).toEqual(['23 kg/m³', '32 kg/m³', '40 kg/m³']);
+    expect(filterProducts(products, 'Foams', '').filter(p => p.name.includes('Density')).map(p => p.density)).toEqual(['23 kg/m³', '32 kg/m³', '40 kg/m³']);
   });
 });
 import { foamOptions } from '@/lib/catalogue';
@@ -47,4 +47,4 @@ describe('foam size and density options', () => {
   });
 });
 import { buildBill as _bb } from '@/lib/catalogue';
-describe('bill', () => { it('multiplies fixed rate by quantity', () => { const b = _bb([{ slug: 'pu-foam-sheets', quantity: 10 }, { slug: 'bulk-adhesive-drum-pack', quantity: 2 }]); expect(b.lines[0]!.total).toBe(2800); expect(b.grandTotal).toBe(2800 + 7600); }); });
+describe('bill', () => { it('multiplies fixed rate by quantity', () => { const b = _bb(products, [{ slug: 'pu-foam-sheets', quantity: 10 }, { slug: 'bulk-adhesive-drum-pack', quantity: 2 }]); expect(b.lines[0]!.total).toBe(2800); expect(b.grandTotal).toBe(2800 + 7600); }); });

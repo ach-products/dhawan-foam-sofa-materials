@@ -58,6 +58,13 @@ export const listAllProducts = createServerFn({ method: "GET" }).handler(async (
   return rows.map(toDbProduct);
 });
 
+// Public: only published products, for the live catalogue and product detail pages.
+export const listPublicProducts = createServerFn({ method: "GET" }).handler(async () => {
+  const { sql } = await import("@/lib/db.server");
+  const rows = (await sql`select * from products where status = 'Published' order by name asc`) as unknown as ProductRow[];
+  return rows.map(toDbProduct);
+});
+
 export const saveProduct = createServerFn({ method: "POST" })
   .validator((data: { product: DbProduct; originalSlug?: string }) => data)
   .handler(async ({ data }) => {

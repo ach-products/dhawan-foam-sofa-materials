@@ -3,15 +3,16 @@ import { useState } from 'react';
 import { ArrowRight, ArrowUpRight, Check, ChevronDown, Plus, Search, SlidersHorizontal, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCatalogue } from '@/components/catalogue-shell';
-import { categories, categorySpecs, filterProducts, products } from '@/lib/catalogue';
+import { categories, categorySpecs, filterProducts } from '@/lib/catalogue';
 export const Route = createFileRoute('/')({
  head:()=>({meta:[{title:'Dhawan Foam & Sofa Materials | Bulk Product Catalogue'},{name:'description',content:'Explore foam qualities, sofa legs, fabrics, staple pins and adhesives for bulk supply at Dhawan Foam & Sofa Materials.'},{property:'og:title',content:'Dhawan Foam & Sofa Materials | Product Catalogue'},{property:'og:description',content:'Foams, sofa legs, fabrics, staple pins and adhesives. Explore the bulk materials collection.'},{property:'og:type',content:'website'},{name:'twitter:card',content:'summary_large_image'}]}),
  component: Catalogue,
 });
 function Catalogue(){
- const [category,setCategory]=useState('Categories');const [query,setQuery]=useState('');const [sort,setSort]=useState('Featured');const [filterOpen,setFilterOpen]=useState(false);const [type,setType]=useState('All types');const [limit,setLimit]=useState(8);const {add,items}=useCatalogue();
- const filtered=filterProducts(category,query,type);const sorted=sort==='Name: A–Z'?[...filtered].sort((a,b)=>a.name.localeCompare(b.name)):sort==='Name: Z–A'?[...filtered].sort((a,b)=>b.name.localeCompare(a.name)):filtered;
+ const [category,setCategory]=useState('Categories');const [query,setQuery]=useState('');const [sort,setSort]=useState('Featured');const [filterOpen,setFilterOpen]=useState(false);const [type,setType]=useState('All types');const [limit,setLimit]=useState(8);const {add,items,products,loading}=useCatalogue();
+ const filtered=filterProducts(products,category,query,type);const sorted=sort==='Name: A–Z'?[...filtered].sort((a,b)=>a.name.localeCompare(b.name)):sort==='Name: Z–A'?[...filtered].sort((a,b)=>b.name.localeCompare(a.name)):filtered;
  function choose(value:string){setCategory(value);setType('All types');setLimit(8);}
+ if(loading) return <div className="page-width auth-gate">Loading catalogue…</div>;
  return <>
  <div className="collection-tabs page-width" role="tablist" aria-label="Product categories">{['Categories',...categories,'All products'].map(c=><Button role="tab" aria-selected={category===c} key={c} variant="ghost" className={category===c?'category-tab selected':'category-tab'} onClick={()=>choose(c)}>{c}<span>{c==='Categories'?categories.length:c==='All products'?products.length:products.filter(p=>p.category===c).length}</span></Button>)}<span className="collection-caption">THE MATERIALS COLLECTION</span></div>
  {category==='Categories'?<section className="product-section page-width"><div className="section-heading"><div><span className="eyebrow">SHOP BY CATEGORY</span><h1>What are you looking for?<span>{categories.length} categories</span></h1></div></div>

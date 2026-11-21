@@ -43,8 +43,8 @@ export const products: Product[] = [
  {slug:'spray-adhesive',name:'Spray Adhesive',category:'Adhesives',type:'Aerosol spray glue',image:spray.url,price:'₹260 / can',density:'Aerosol · even mist',sizes:'400 ml · 750 ml cans',description:'A fine-mist spray glue for laying fabric, felt and thin foam liners without wrinkles or soak-through. Shake well and spray in light, even coats.'},
  {slug:'water-based-foam-glue',name:'Water-Based Foam Glue',category:'Adhesives',type:'Water-based adhesive',image:bucket.url,price:'₹180 / litre',density:'Water-based · low odour',sizes:'1 L · 5 L · 20 L cans',description:'A low-odour, solvent-free glue for foam lamination and light upholstery work where ventilation is limited. Needs longer open time and pressing.'},
 ];
-export function filterProducts(category: string, query: string, type = 'All types') {
- return products.filter(p => (category === 'All products' || p.category === category) && (type === 'All types' || p.type === type) && `${p.name} ${p.type}`.toLowerCase().includes(query.toLowerCase()));
+export function filterProducts(list: Product[], category: string, query: string, type = 'All types') {
+ return list.filter(p => (category === 'All products' || p.category === category) && (type === 'All types' || p.type === type) && `${p.name} ${p.type}`.toLowerCase().includes(query.toLowerCase()));
 }
 const densityGrades = [18, 23, 28, 32, 40, 50, 60, 80, 100, 120];
 const thicknessGrades = [25, 50, 75, 100, 125, 150];
@@ -69,7 +69,7 @@ export function foamRate(p: Product, options?: string) {
 export function priceInfo(price: string) { const amount = Number(price.replace(/[^\d.\/]/g, '').split('/')[0]) || 0; const unit = price.split('/')[1]?.trim() ?? 'unit'; return { amount, unit }; }
 export const formatINR = (n: number) => '₹' + n.toLocaleString('en-IN');
 export type BillLine = { name: string; options?: string; quantity: number; rate: number; unit: string; total: number };
-export function buildBill(items: { slug: string; quantity: number; options?: string }[]) {
- const lines: BillLine[] = items.flatMap(i => { const p = products.find(x => x.slug === i.slug); if (!p) return []; const { unit } = priceInfo(p.price); const amount = foamRate(p, i.options); return [{ name: p.name, ...(i.options ? { options: i.options } : {}), quantity: i.quantity, rate: amount, unit, total: amount * i.quantity }]; });
+export function buildBill(list: Product[], items: { slug: string; quantity: number; options?: string }[]) {
+ const lines: BillLine[] = items.flatMap(i => { const p = list.find(x => x.slug === i.slug); if (!p) return []; const { unit } = priceInfo(p.price); const amount = foamRate(p, i.options); return [{ name: p.name, ...(i.options ? { options: i.options } : {}), quantity: i.quantity, rate: amount, unit, total: amount * i.quantity }]; });
  return { lines, grandTotal: lines.reduce((s, l) => s + l.total, 0) };
 }
