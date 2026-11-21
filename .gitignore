@@ -10,6 +10,8 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+# This project uses bun.lock (bunfig.toml); package-lock.json only appears from local npm installs.
+package-lock.json
 .output
 .vinxi
 .tanstack/**
@@ -19,6 +21,9 @@ dist-ssr
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
+
+# Vercel
+.vercel
 
 # Editor directories and files
 .vscode/*

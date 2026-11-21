@@ -15,4 +15,7 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Only applies on Vercel's own build machines (VERCEL is set there, never inside the
+  // Lovable sandbox), so Lovable's Cloudflare publishing is unaffected.
+  nitro: process.env.VERCEL ? { preset: "vercel" } : undefined,
 });
