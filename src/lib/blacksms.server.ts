@@ -27,7 +27,7 @@ export async function sendOtpCodeSms(mobile: string, code: string): Promise<void
   const response = await fetch(new URL("/sms", BLACKSMS_BASE), {
     method: "POST",
     headers: { Authorization: getApiKey(), "Content-Type": "application/json" },
-    body: JSON.stringify({ sender_id: getSenderId(), variables_values: code, numbers: mobile, route: 1 }),
+    body: JSON.stringify({ sender_id: getSenderId(), variables_values: code, numbers: mobile, route: "1" }),
   });
   const text = await response.text();
   let data: SmsResponse;

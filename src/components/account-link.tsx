@@ -11,6 +11,6 @@ export function AccountLink() {
     window.addEventListener('demo-auth', sync);
     return () => window.removeEventListener('demo-auth', sync);
   }, []);
-  if (phone) return <Button variant="ghost" onClick={() => setDemoPhone(null)}>{phone} · Logout</Button>;
+  if (phone) return <Button variant="ghost" className="account-link" onClick={() => setDemoPhone(null)}><span className="account-phone">{phone} · </span>Logout</Button>;
   return <Link to="/login">Login</Link>;
 }
