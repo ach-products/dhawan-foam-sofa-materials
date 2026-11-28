@@ -1,0 +1,821 @@
+[
+ {
+  "Density": "32D",
+  "Size": "72X35X20MM/6X3X20MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "745 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "32D",
+  "Size": "72X35X25MM/6X3X25MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "920 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "32D",
+  "Size": "72X35X40MM/6X3X40MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "1490 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "32D",
+  "Size": "72X35X50MM/6X3X50MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "1840 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "32D",
+  "Size": "72X35X70MM/6X3X70MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "2590 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "32D",
+  "Size": "72X35X90MM/6X3X90MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "3320 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "32D",
+  "Size": "72X35X100MM/6X3X100MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "3685 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "32D",
+  "Size": "72X35X120MM/6X3X120MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "4420 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "32D",
+  "Size": "72X47X75MM/6X4X75MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "3710 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "32D",
+  "Size": "72X47X90MM/6X4X90MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "4450 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "32D",
+  "Size": "72X47X100MM/6X4X100MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "4950 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "72X35X20MM/6X3X20MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "900 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "72X35X25MM/6X3X25MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "1125 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "72X35X40MM/6X3X40MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "1800 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "72X35X50MM/6X3X50MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "2250 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "72X35X70MM/6X3X70MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "3150 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "72X35X90MM/6X3X90MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "4050 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "72X35X100MM/6X3X100MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "4500 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "72X35X120MM/6X3X120MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "5400 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "72X47X75MM/6X4X75MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "4530 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "72X47X90MM/6X4X90MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "5440 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "72X47X100MM/6X4X100MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWELL)",
+  "Rate": "6040 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "32D",
+  "Size": "21X22X90MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWEEL)",
+  "Rate": "610 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "32D",
+  "Size": "21X22X100MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWEEL)",
+  "Rate": "675 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "21X22X90MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWEEL)",
+  "Rate": "740 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "21X22X100MM",
+  "Item / Quality": "FEATHERFOAM (SLEEPWEEL)",
+  "Rate": "825 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "32D",
+  "Size": "21X22X110MM",
+  "Item / Quality": "SLEEPWELL PRIMOCOOL",
+  "Rate": "1005 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "21X22X110MM",
+  "Item / Quality": "SLEEPWELL PRIMOCOOL",
+  "Rate": "1256 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "32D",
+  "Size": "72X35X110",
+  "Item / Quality": "SLEEPWELL PRIMOCOOL",
+  "Rate": "5480 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "72X35X110",
+  "Item / Quality": "SLEEPWELL PRIMOCOOL",
+  "Rate": "6850 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "32D",
+  "Size": "72X47X110",
+  "Item / Quality": "SLEEPWELL PRIMOCOOL",
+  "Rate": "7360 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "40D",
+  "Size": "72X47X110",
+  "Item / Quality": "SLEEPWELL PRIMOCOOL",
+  "Rate": "9200 / sheet",
+  "Category": "Foam"
+ },
+ {
+  "Density": "-",
+  "Size": "72X70",
+  "Item / Quality": "PROTECTOR",
+  "Rate": 800,
+  "Category": "Protector"
+ },
+ {
+  "Density": "-",
+  "Size": "75X70",
+  "Item / Quality": "PROTECTOR",
+  "Rate": 800,
+  "Category": "Protector"
+ },
+ {
+  "Density": "-",
+  "Size": "78X70",
+  "Item / Quality": "PROTECTOR",
+  "Rate": 800,
+  "Category": "Protector"
+ },
+ {
+  "Density": "-",
+  "Size": "72X35",
+  "Item / Quality": "PROTECTOR",
+  "Rate": 450,
+  "Category": "Protector"
+ },
+ {
+  "Density": "-",
+  "Size": "75X35",
+  "Item / Quality": "PROTECTOR",
+  "Rate": 450,
+  "Category": "Protector"
+ },
+ {
+  "Density": "-",
+  "Size": "78X35",
+  "Item / Quality": "PROTECTOR",
+  "Rate": 450,
+  "Category": "Protector"
+ },
+ {
+  "Density": "-",
+  "Size": "72X47",
+  "Item / Quality": "PROTECTOR",
+  "Rate": 600,
+  "Category": "Protector"
+ },
+ {
+  "Density": "-",
+  "Size": "72X60",
+  "Item / Quality": "PROTECTOR",
+  "Rate": 700,
+  "Category": "Protector"
+ },
+ {
+  "Density": "-",
+  "Size": "13MM",
+  "Item / Quality": "TINGLE NAIL",
+  "Rate": "60/PKT",
+  "Category": "Fasteners"
+ },
+ {
+  "Density": "-",
+  "Size": "8MM",
+  "Item / Quality": "TINGLE NAIL",
+  "Rate": "60/PKT",
+  "Category": "Fasteners"
+ },
+ {
+  "Density": "-",
+  "Size": "-",
+  "Item / Quality": "BLACK NAIL",
+  "Rate": "200/KG",
+  "Category": "Fasteners"
+ },
+ {
+  "Density": "-",
+  "Size": "1\"",
+  "Item / Quality": "SCREW",
+  "Rate": "200/KG",
+  "Category": "Fasteners"
+ },
+ {
+  "Density": "-",
+  "Size": "1.5\"",
+  "Item / Quality": "SCREW",
+  "Rate": "250/KG",
+  "Category": "Fasteners"
+ },
+ {
+  "Density": "-",
+  "Size": "2\"",
+  "Item / Quality": "SCREW",
+  "Rate": "200/KG",
+  "Category": "Fasteners"
+ },
+ {
+  "Density": "-",
+  "Size": "2.5\"",
+  "Item / Quality": "SCREW",
+  "Rate": "200/KG",
+  "Category": "Fasteners"
+ },
+ {
+  "Density": "-",
+  "Size": "3\"",
+  "Item / Quality": "SCREW",
+  "Rate": "200/KG",
+  "Category": "Fasteners"
+ },
+ {
+  "Density": "-",
+  "Size": "-",
+  "Item / Quality": "CASEMENT",
+  "Rate": "40/MTR",
+  "Category": "Fabric"
+ },
+ {
+  "Density": "-",
+  "Size": "-",
+  "Item / Quality": "MARKEEN",
+  "Rate": 40,
+  "Category": "Fabric"
+ },
+ {
+  "Density": "-",
+  "Size": "-",
+  "Item / Quality": "TAPTA",
+  "Rate": 30,
+  "Category": "Fabric"
+ },
+ {
+  "Density": "-",
+  "Size": "-",
+  "Item / Quality": "ASTER",
+  "Rate": 10,
+  "Category": "Fabric"
+ },
+ {
+  "Density": "-",
+  "Size": "34\" (SINGLE ARZ)",
+  "Item / Quality": "CANVAS",
+  "Rate": 60,
+  "Category": "Fabric"
+ },
+ {
+  "Density": "-",
+  "Size": "72\"",
+  "Item / Quality": "TAAT",
+  "Rate": 90,
+  "Category": "Fabric"
+ },
+ {
+  "Density": "-",
+  "Size": "-",
+  "Item / Quality": "PIPING GOLDEN",
+  "Rate": "50/MTR",
+  "Category": "Fabric"
+ },
+ {
+  "Density": "-",
+  "Size": "-",
+  "Item / Quality": "PIPING ROSE GOLDEN",
+  "Rate": "50/MTR",
+  "Category": "Fabric"
+ },
+ {
+  "Density": "-",
+  "Size": "-",
+  "Item / Quality": "JOOT NIWAR",
+  "Rate": 120,
+  "Category": "Niwar"
+ },
+ {
+  "Density": "-",
+  "Size": "2\"",
+  "Item / Quality": "ELASTIK NIWAR",
+  "Rate": 220,
+  "Category": "Niwar"
+ },
+ {
+  "Density": "-",
+  "Size": "3\"",
+  "Item / Quality": "ELASTIK NIWAR",
+  "Rate": 400,
+  "Category": "Niwar"
+ },
+ {
+  "Density": "-",
+  "Size": "23/8 INDIAN",
+  "Item / Quality": "STAPLER PIN",
+  "Rate": "30/PC",
+  "Category": "Stapler Pin"
+ },
+ {
+  "Density": "-",
+  "Size": "23/8 MEDIUM",
+  "Item / Quality": "STAPLER PIN",
+  "Rate": "50/PC",
+  "Category": "Stapler Pin"
+ },
+ {
+  "Density": "-",
+  "Size": "23/8 BIG",
+  "Item / Quality": "STAPLER PIN",
+  "Rate": "60/PC",
+  "Category": "Stapler Pin"
+ },
+ {
+  "Density": "-",
+  "Size": "10X10",
+  "Item / Quality": "STAPLER PIN",
+  "Rate": "70/PC",
+  "Category": "Stapler Pin"
+ },
+ {
+  "Density": "-",
+  "Size": "10X13",
+  "Item / Quality": "STAPLER PIN",
+  "Rate": "70/PC",
+  "Category": "Stapler Pin"
+ },
+ {
+  "Density": "-",
+  "Size": "80X10",
+  "Item / Quality": "STAPLER PIN",
+  "Rate": "110/PC",
+  "Category": "Stapler Pin"
+ },
+ {
+  "Density": "-",
+  "Size": "F-20",
+  "Item / Quality": "STAPLER PIN",
+  "Rate": "80/PC",
+  "Category": "Stapler Pin"
+ },
+ {
+  "Density": "-",
+  "Size": "F-30",
+  "Item / Quality": "STAPLER PIN",
+  "Rate": "80/PC",
+  "Category": "Stapler Pin"
+ },
+ {
+  "Density": "-",
+  "Size": "23/8",
+  "Item / Quality": "STAPLER PIN",
+  "Rate": "1600/PETI",
+  "Category": "Stapler Pin"
+ },
+ {
+  "Density": "-",
+  "Size": "10X13",
+  "Item / Quality": "STAPLER PIN",
+  "Rate": "1000/PETI",
+  "Category": "Stapler Pin"
+ },
+ {
+  "Density": "-",
+  "Size": "10X10",
+  "Item / Quality": "STAPLER PIN",
+  "Rate": "1000/PETI",
+  "Category": "Stapler Pin"
+ },
+ {
+  "Density": "-",
+  "Size": "80X10",
+  "Item / Quality": "STAPLER PIN",
+  "Rate": "1100/PETI",
+  "Category": "Stapler Pin"
+ },
+ {
+  "Density": "-",
+  "Size": "L 2\"",
+  "Item / Quality": "PVC SOFA LEG",
+  "Rate": "4/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "L 3\"",
+  "Item / Quality": "PVC SOFA LEG",
+  "Rate": "7/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "L 2\"",
+  "Item / Quality": "CHROME SOFA LEG",
+  "Rate": "25/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "L 2\"",
+  "Item / Quality": "GOLDEN SOFA LEG",
+  "Rate": "30/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "L 2\"",
+  "Item / Quality": "ROSE GOLD SOFA LEG",
+  "Rate": "30/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "L 3\"",
+  "Item / Quality": "CHROME SOFA LEG",
+  "Rate": "30/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "L 3\"",
+  "Item / Quality": "GOLDEN SOFA LEG",
+  "Rate": "35/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "L 3\"",
+  "Item / Quality": "ROSE GOLD SOFA LEG",
+  "Rate": "35/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "WIRE LEG 3\"",
+  "Item / Quality": "BLACK SOFA LEG",
+  "Rate": "40/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "WIRE LEG 3\"",
+  "Item / Quality": "GOLDEN SOFA LEG",
+  "Rate": "40/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "WIRE LEG 3\"",
+  "Item / Quality": "ROSE GOLD SOFA LEG",
+  "Rate": "40/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "WIRE LEG 4\"",
+  "Item / Quality": "BLACK SOFA LEG",
+  "Rate": "40/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "WIRE LEG 4\"",
+  "Item / Quality": "ROSE GOLD SOFA LEG",
+  "Rate": "40/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "WIRE LEG 4\"",
+  "Item / Quality": "GOLDEN SOFA LEG",
+  "Rate": "40/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "WIRE LEG 6\"",
+  "Item / Quality": "BLACK SOFA LEG",
+  "Rate": "60/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "WIRE 6\"",
+  "Item / Quality": "GOLDEN SOFA LEG",
+  "Rate": "60/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "WIRE 6\"",
+  "Item / Quality": "ROSE GOLD SOFA LEG",
+  "Rate": "60/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "L T 4\"",
+  "Item / Quality": "CHROME SOFA LEG",
+  "Rate": "25/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "L T 4\"",
+  "Item / Quality": "GOLDEN SOFA LEG",
+  "Rate": "25/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "L T 4\"",
+  "Item / Quality": "ROSE GOLD SOFA LEG",
+  "Rate": "25/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "L T 4\"",
+  "Item / Quality": "BLACK SOFA LEG",
+  "Rate": "25/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "L 2\"",
+  "Item / Quality": "PIPE SS SOFA LEG",
+  "Rate": "60/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "L 2\"",
+  "Item / Quality": "PIPE GOLDEN SS SOFA LEG",
+  "Rate": "90/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "L 3\"",
+  "Item / Quality": "PIPE SS SOFA LEG",
+  "Rate": "90/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "STAR 5\"",
+  "Item / Quality": "GOLDEN SOFA LEG",
+  "Rate": "70/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "5\"",
+  "Item / Quality": "SNAKE LEG GOLDEN SOFA LEG",
+  "Rate": "120/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "KULFI 4\"",
+  "Item / Quality": "GOLDEN SOFA LEG",
+  "Rate": "35/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "KULFI 6\"",
+  "Item / Quality": "GOLDEN SOFA LEG",
+  "Rate": "55/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "KULFI 4\"",
+  "Item / Quality": "ROSE GOLD SOFA LEG",
+  "Rate": "35/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "KULFI 6\"",
+  "Item / Quality": "ROSE GOLD SOFA LEG",
+  "Rate": "55/PC",
+  "Category": "Sofa Legs"
+ },
+ {
+  "Density": "-",
+  "Size": "1 LTR",
+  "Item / Quality": "SOLUTION (MAXIMUM)",
+  "Rate": 200,
+  "Category": "Adhesive"
+ },
+ {
+  "Density": "-",
+  "Size": "500ML",
+  "Item / Quality": "SOLUTION (MAXIMUM)",
+  "Rate": 110,
+  "Category": "Adhesive"
+ },
+ {
+  "Density": "-",
+  "Size": "5 LTR",
+  "Item / Quality": "SOLUTION (MAXIMUM)",
+  "Rate": 910,
+  "Category": "Adhesive"
+ },
+ {
+  "Density": "-",
+  "Size": "500ML",
+  "Item / Quality": "FOAMFIX (FEVICOL)",
+  "Rate": 175,
+  "Category": "Adhesive"
+ },
+ {
+  "Density": "-",
+  "Size": "1 LTR",
+  "Item / Quality": "FOAMFIX (FEVICOL)",
+  "Rate": 320,
+  "Category": "Adhesive"
+ },
+ {
+  "Density": "-",
+  "Size": "2 LTR",
+  "Item / Quality": "FOAMFIX (FEVICOL)",
+  "Rate": 620,
+  "Category": "Adhesive"
+ },
+ {
+  "Density": "-",
+  "Size": "5 LTR",
+  "Item / Quality": "FOAMFIX (FEVICOL)",
+  "Rate": 1500,
+  "Category": "Adhesive"
+ },
+ {
+  "Density": "-",
+  "Size": "500ML",
+  "Item / Quality": "SR 505 (FEVICOL)",
+  "Rate": 190,
+  "Category": "Adhesive"
+ },
+ {
+  "Density": "-",
+  "Size": "1 LTR",
+  "Item / Quality": "SR 505 (FEVICOL)",
+  "Rate": 355,
+  "Category": "Adhesive"
+ },
+ {
+  "Density": "-",
+  "Size": "2 LTR",
+  "Item / Quality": "SR 505 (FEVICOL)",
+  "Rate": 700,
+  "Category": "Adhesive"
+ },
+ {
+  "Density": "-",
+  "Size": "5 LTR",
+  "Item / Quality": "SR 505 (FEVICOL)",
+  "Rate": 1700,
+  "Category": "Adhesive"
+ },
+ {
+  "Density": "-",
+  "Size": "25 LTR",
+  "Item / Quality": "BEJOD (FEVICOL)",
+  "Rate": 6000,
+  "Category": "Adhesive"
+ },
+ {
+  "Density": "-",
+  "Size": "4 LTR SPRAY",
+  "Item / Quality": "FASTTACK (FEVICOL)",
+  "Rate": 1100,
+  "Category": "Adhesive"
+ },
+ {
+  "Density": "-",
+  "Size": "1 LTR SPRAY",
+  "Item / Quality": "SOLUTION (FAST GRIP)",
+  "Rate": 200,
+  "Category": "Adhesive"
+ },
+ {
+  "Density": "-",
+  "Size": "3 LTR SPRAY",
+  "Item / Quality": "SOLUTION (FAST GRIP)",
+  "Rate": 520,
+  "Category": "Adhesive"
+ },
+ {
+  "Density": "-",
+  "Size": "CONASTOR 7LTR",
+  "Item / Quality": "SOLUTION (FAST GRIP)",
+  "Rate": 800,
+  "Category": "Adhesive"
+ }
+]

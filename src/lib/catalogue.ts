@@ -10,7 +10,7 @@ import glue from '@/assets/foam-glue.asset.json';
 import spray from '@/assets/spray-glue.asset.json';
 import drums from '@/assets/adhesive-drums.asset.json';
 import bucket from '@/assets/adhesive-bucket.asset.json';
-export const categories = ['Foams', 'Sofa Legs', 'Fabrics', 'Staple Pins', 'Adhesives'] as const;
+export const categories = ['Foams', 'Sofa Legs', 'Fabrics', 'Staple Pins', 'Adhesives', 'Protectors', 'Fasteners', 'Niwar'] as const;
 export type ProductCategory = typeof categories[number];
 export const categorySpecs = {
  Foams: { specification: 'Density', size: 'Available thickness', description: 'Upholstery, support and comfort foam qualities' },
@@ -18,6 +18,9 @@ export const categorySpecs = {
  Fabrics: { specification: 'Texture / finish', size: 'Width / supply', description: 'Upholstery fabrics for sofas and cushions' },
  'Staple Pins': { specification: 'Series / material', size: 'Leg length', description: 'Upholstery fastening pins and staple strips' },
  Adhesives: { specification: 'Base / tack type', size: 'Pack sizes', description: 'Fevicol-type, foam bonding and sofa repair adhesives in bulk cans, buckets and drums' },
+ Protectors: { specification: 'Type', size: 'Dimensions', description: 'Mattress and sofa protectors' },
+ Fasteners: { specification: 'Length / gauge', size: 'Pack type', description: 'Nails, screws and tingle fasteners for furniture assembly' },
+ Niwar: { specification: 'Material', size: 'Width', description: 'Jute and elastic webbing for seat and back support' },
 };
 export type Product = { slug: string; name: string; category: ProductCategory; type: string; image: string; price: string; density: string; sizes: string; description: string; tag?: string };
 export const products: Product[] = [
