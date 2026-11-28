@@ -10,18 +10,10 @@ import glue from '@/assets/foam-glue.asset.json';
 import spray from '@/assets/spray-glue.asset.json';
 import drums from '@/assets/adhesive-drums.asset.json';
 import bucket from '@/assets/adhesive-bucket.asset.json';
-export const categories = ['Foams', 'Sofa Legs', 'Fabrics', 'Staple Pins', 'Adhesives', 'Protectors', 'Fasteners', 'Niwar'] as const;
-export type ProductCategory = typeof categories[number];
-export const categorySpecs = {
- Foams: { specification: 'Density', size: 'Available thickness', description: 'Upholstery, support and comfort foam qualities' },
- 'Sofa Legs': { specification: 'Material / finish', size: 'Available heights', description: 'Furniture legs and sofa supports' },
- Fabrics: { specification: 'Texture / finish', size: 'Width / supply', description: 'Upholstery fabrics for sofas and cushions' },
- 'Staple Pins': { specification: 'Series / material', size: 'Leg length', description: 'Upholstery fastening pins and staple strips' },
- Adhesives: { specification: 'Base / tack type', size: 'Pack sizes', description: 'Fevicol-type, foam bonding and sofa repair adhesives in bulk cans, buckets and drums' },
- Protectors: { specification: 'Type', size: 'Dimensions', description: 'Mattress and sofa protectors' },
- Fasteners: { specification: 'Length / gauge', size: 'Pack type', description: 'Nails, screws and tingle fasteners for furniture assembly' },
- Niwar: { specification: 'Material', size: 'Width', description: 'Jute and elastic webbing for seat and back support' },
-};
+// Categories are admin-managed data now (src/lib/categories.functions.ts, backed by the
+// `categories` table) — this is seed data only, used by scripts/migrate-categories.mjs and
+// the unit tests, not the live source of category names/labels.
+export type ProductCategory = string;
 export type Product = { slug: string; name: string; category: ProductCategory; type: string; images: string[]; price: string; density: string; sizes: string; description: string; tag?: string };
 export const products: Product[] = [
  {slug:'pu-foam-sheets',name:'PU Foam Sheets',category:'Foams',type:'Polyurethane foam',images:[pu.url],price:'₹280 / sheet',density:'18–40 kg/m³',sizes:'25–150 mm',description:'Versatile, lightweight polyurethane sheets for upholstery, cushioning and everyday comfort.',tag:'BULK FAVOURITE'},

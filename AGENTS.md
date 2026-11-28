@@ -30,8 +30,9 @@ use the editor.
 <!-- LOVABLE:END -->
 
 ## Catalogue architecture
-- Keep category options, specification labels, and pure pricing/filtering helpers in the shared browser-safe `src/lib/catalogue.ts` module; grid and detail pages must use the same product specifications and helpers.
+- Keep pure pricing/filtering helpers in the shared browser-safe `src/lib/catalogue.ts` module; grid and detail pages must use the same product specifications and helpers.
 - Product data is production data, stored in the Supabase Postgres database (`products` table) managed via `src/lib/products.functions.ts` and the `/admin` panel. The static `products` array in `catalogue.ts` is seed/reference data only (used by `scripts/setup-db.mjs`), not the live source for the public catalogue's own admin-managed state.
+- Categories (name, description, specification/size labels, image) are production data too, stored in the `categories` table and managed via `src/lib/categories.functions.ts` and the `/admin` panel's Categories view. They're fetched into the shared shell's React context (`src/components/catalogue-shell.tsx`) alongside products — pages must read categories from there, not from a static list. Renaming a category cascades to every product that references it.
 - Keep enquiry selections in the shared shell's React context. Submitting an enquiry calls `src/lib/enquiries.functions.ts`, which inserts a real row into the `enquiries` table — this is a real submission, not a demo action. "Download bill" remains a separate, secondary action that only exports a local copy.
 
 ## Admin panel architecture

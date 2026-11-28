@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { categories, type ProductCategory } from "@/lib/catalogue";
+import type { ProductCategory } from "@/lib/catalogue";
 
 export type DbProduct = {
   slug: string;
@@ -71,8 +71,9 @@ export const saveProduct = createServerFn({ method: "POST" })
     const { sql } = await import("@/lib/db.server");
     const { product, originalSlug } = data;
 
-    if (!categories.includes(product.category)) throw new Error("Choose a supported product category.");
     if (!product.name.trim() || !product.slug.trim()) throw new Error("Product name and URL are required.");
+    const categoryExists = await sql`select 1 from categories where name = ${product.category}`;
+    if (categoryExists.length === 0) throw new Error("Choose a supported product category.");
 
     const clash = await sql`select 1 from products where slug = ${product.slug} and slug != ${originalSlug ?? ""}`;
     if (clash.length > 0) throw new Error("This product URL is already in use.");

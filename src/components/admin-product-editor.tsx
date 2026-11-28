@@ -5,11 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { categories, categorySpecs, PLACEHOLDER_IMAGE } from '@/lib/catalogue';
+import { PLACEHOLDER_IMAGE } from '@/lib/catalogue';
 import type { AdminProduct } from '@/lib/admin-catalogue';
+import type { Category } from '@/lib/categories.functions';
 
-export function AdminProductEditor({ product, onSave, onClose }: { product?: AdminProduct | undefined; onSave: (p: AdminProduct) => Promise<string | undefined>; onClose: () => void }) {
-  const [form, setForm] = useState<AdminProduct>(product ?? { slug: '', name: '', category: 'Foams', type: '', price: '', density: '', sizes: '', description: '', images: [], tag: '', status: 'Draft', updated: '' });
+export function AdminProductEditor({ product, categories, onSave, onClose }: { product?: AdminProduct | undefined; categories: Category[]; onSave: (p: AdminProduct) => Promise<string | undefined>; onClose: () => void }) {
+  const [form, setForm] = useState<AdminProduct>(product ?? { slug: '', name: '', category: categories[0]?.name ?? '', type: '', price: '', density: '', sizes: '', description: '', images: [], tag: '', status: 'Draft', updated: '' });
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   function field<K extends keyof AdminProduct>(key: K, value: AdminProduct[K]) { setForm(p => ({ ...p, [key]: value })); }
@@ -33,9 +34,9 @@ export function AdminProductEditor({ product, onSave, onClose }: { product?: Adm
         <span className="text-xs text-muted-foreground">JPG, PNG or WebP · first photo is used as the primary thumbnail</span>
       </div>
       <label>Product name<Input required value={form.name} onChange={e => { const name = e.target.value; setForm(p => ({ ...p, name, ...(!product ? { slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') } : {}) })); }} /></label>
-      <div className="admin-form-columns"><label>Category<select value={form.category} onChange={e => { const category = categories.find(c => c === e.target.value); if (category) field('category', category); }}>{categories.map(c => <option key={c}>{c}</option>)}</select></label><label>Material / type<Input required value={form.type} onChange={e => field('type', e.target.value)} /></label></div>
+      <div className="admin-form-columns"><label>Category<select value={form.category} onChange={e => field('category', e.target.value)}>{categories.map(c => <option key={c.name}>{c.name}</option>)}</select></label><label>Material / type<Input required value={form.type} onChange={e => field('type', e.target.value)} /></label></div>
       <label>Price (e.g. ₹280 / sheet)<Input required value={form.price} onChange={e => field('price', e.target.value)} placeholder="₹280 / sheet" /></label>
-      <div className="admin-form-columns"><label>{categorySpecs[form.category].specification}<Input required value={form.density} onChange={e => field('density', e.target.value)}  /></label><label>{categorySpecs[form.category].size}<Input required value={form.sizes} onChange={e => field('sizes', e.target.value)}  /></label></div>
+      <div className="admin-form-columns"><label>{categories.find(c => c.name === form.category)?.specification ?? 'Specification'}<Input required value={form.density} onChange={e => field('density', e.target.value)}  /></label><label>{categories.find(c => c.name === form.category)?.size ?? 'Size'}<Input required value={form.sizes} onChange={e => field('sizes', e.target.value)}  /></label></div>
       <label>Description<Textarea required rows={3} value={form.description} onChange={e => field('description', e.target.value)} /></label>
       <div className="admin-form-columns"><label>Product URL<Input required pattern="[a-z0-9]+(-[a-z0-9]+)*" value={form.slug} onChange={e => field('slug', e.target.value)} /></label><label>Product badge<select value={form.tag ?? ''} onChange={e => field('tag', e.target.value)}><option value="">None</option><option>BULK FAVOURITE</option><option>POPULAR</option><option>PREMIUM</option></select></label></div>
       <div className="admin-publish-row"><div><strong>Published</strong><span>{form.status === 'Published' ? 'Visible in the catalogue' : 'Keep as a draft'}</span></div><Switch aria-label="Published" checked={form.status === 'Published'} onCheckedChange={checked => field('status', checked ? 'Published' : 'Draft')} /></div>

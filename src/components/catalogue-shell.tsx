@@ -7,23 +7,25 @@ import { buildBill, formatINR, primaryImage, type Product } from '@/lib/catalogu
 import { getDemoPhone } from '@/lib/mock-auth';
 import { submitEnquiry } from '@/lib/enquiries.functions';
 import { listPublicProducts } from '@/lib/products.functions';
+import { listCategories, type Category } from '@/lib/categories.functions';
 import { AccountLink } from '@/components/account-link';
 type Selection = { slug: string; quantity: number };
-const CatalogueContext = createContext<{items: Selection[]; add: (slug: string, quantity?: number) => void; open: () => void; products: Product[]; loading: boolean}>({items:[], add:()=>{},open:()=>{},products:[],loading:true});
+const CatalogueContext = createContext<{items: Selection[]; add: (slug: string, quantity?: number) => void; open: () => void; products: Product[]; categories: Category[]; loading: boolean}>({items:[], add:()=>{},open:()=>{},products:[],categories:[],loading:true});
 export const useCatalogue = () => useContext(CatalogueContext);
 export function CatalogueShell({children}: {children: ReactNode}) {
  const [items,setItems] = useState<Selection[]>([]);
  const [products,setProducts] = useState<Product[]>([]);
+ const [categories,setCategories] = useState<Category[]>([]);
  const [loading,setLoading] = useState(true);
  const [isOpen,setOpen] = useState(false);
  const [submitting,setSubmitting] = useState(false);
  const [submitted,setSubmitted] = useState(false);
- useEffect(() => { listPublicProducts().then(setProducts).finally(() => setLoading(false)); }, []);
+ useEffect(() => { Promise.all([listPublicProducts().then(setProducts), listCategories().then(setCategories)]).finally(() => setLoading(false)); }, []);
  function add(slug:string,quantity=1) {setSubmitted(false);setItems(prev => {const existing=prev.find(i=>i.slug===slug);return existing ? prev.map(i=>i.slug===slug?{...i,quantity:i.quantity+quantity}:i):[...prev,{slug,quantity}];});}
  const bill=buildBill(products,items);
  function download() {const phone=getDemoPhone();const text='DHAWAN FOAM & SOFA MATERIALS — ESTIMATE\n'+`Date: ${new Date().toLocaleDateString('en-IN')}\nCustomer mobile: ${phone?'+91 '+phone:'Not logged in'}\n\n`+bill.lines.map((l,n)=>`${n+1}. ${l.name}\n   ${l.quantity} ${l.unit} x ${formatINR(l.rate)} = ${formatINR(l.total)}`).join('\n')+`\n\nGRAND TOTAL: ${formatINR(bill.grandTotal)}\n`;const url=URL.createObjectURL(new Blob([text],{type:'text/plain'}));const a=document.createElement('a');a.href=url;a.download='dhawan-estimate.txt';a.click();URL.revokeObjectURL(url);}
  async function submit() {setSubmitting(true);try{await submitEnquiry({data:{phone:getDemoPhone(),items,grandTotal:bill.grandTotal}});setSubmitted(true);}finally{setSubmitting(false);}}
- return <CatalogueContext.Provider value={{items,add,open:()=>setOpen(true),products,loading}}>
+ return <CatalogueContext.Provider value={{items,add,open:()=>setOpen(true),products,categories,loading}}>
  <header className="site-header page-width"><Link to="/" className="brand" aria-label="Dhawan Foam & Sofa Materials home"><Layers3 strokeWidth={1.5}/><span>dhawan<span className="brand-small">FOAM & SOFA MATERIALS</span></span></Link><nav><Link to="/" className="nav-active">Catalogue</Link><AccountLink/><Button variant="ghost" onClick={()=>setOpen(true)}>Bulk enquiries <ArrowUpRight/></Button></nav><Button variant="ghost" size="icon" className="bag-button" aria-label={`Enquiry list, ${items.length} products`} onClick={()=>setOpen(true)}><ShoppingBag strokeWidth={1.5}/>{items.length>0 && <span className="bag-count">{items.length}</span>}</Button></header>
  <main>{children}</main>
   <footer className="page-width"><div className="footer-bottom"><span>© {new Date().getFullYear()} Dhawan Foam & Sofa Materials.</span><Link to="/admin">Admin panel <ArrowUpRight size={11} className="inline"/></Link></div></footer>
