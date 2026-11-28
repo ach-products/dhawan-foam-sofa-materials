@@ -6,7 +6,7 @@ export type DbProduct = {
   name: string;
   category: ProductCategory;
   type: string;
-  image: string;
+  images: string[];
   price: string;
   density: string;
   sizes: string;
@@ -21,7 +21,7 @@ type ProductRow = {
   name: string;
   category: string;
   type: string;
-  image: string;
+  images: unknown;
   price: string;
   density: string;
   sizes: string;
@@ -41,7 +41,7 @@ function toDbProduct(row: ProductRow): DbProduct {
     name: row.name,
     category: row.category as ProductCategory,
     type: row.type,
-    image: row.image,
+    images: Array.isArray(row.images) ? (row.images as string[]) : [],
     price: row.price,
     density: row.density,
     sizes: row.sizes,
@@ -74,21 +74,21 @@ export const saveProduct = createServerFn({ method: "POST" })
     if (!categories.includes(product.category)) throw new Error("Choose a supported product category.");
     if (!product.name.trim() || !product.slug.trim()) throw new Error("Product name and URL are required.");
 
-    const clash = (await sql`select 1 from products where slug = ${product.slug} and slug != ${originalSlug ?? ""}`) as unknown[];
+    const clash = await sql`select 1 from products where slug = ${product.slug} and slug != ${originalSlug ?? ""}`;
     if (clash.length > 0) throw new Error("This product URL is already in use.");
 
     if (originalSlug) {
       await sql`
         update products set
           slug = ${product.slug}, name = ${product.name}, category = ${product.category}, type = ${product.type},
-          image = ${product.image}, price = ${product.price}, density = ${product.density}, sizes = ${product.sizes},
+          images = ${sql.json(product.images)}, price = ${product.price}, density = ${product.density}, sizes = ${product.sizes},
           description = ${product.description}, tag = ${product.tag ?? null}, status = ${product.status}, updated_at = now()
         where slug = ${originalSlug}
       `;
     } else {
       await sql`
-        insert into products (slug, name, category, type, image, price, density, sizes, description, tag, status)
-        values (${product.slug}, ${product.name}, ${product.category}, ${product.type}, ${product.image}, ${product.price}, ${product.density}, ${product.sizes}, ${product.description}, ${product.tag ?? null}, ${product.status})
+        insert into products (slug, name, category, type, images, price, density, sizes, description, tag, status)
+        values (${product.slug}, ${product.name}, ${product.category}, ${product.type}, ${sql.json(product.images)}, ${product.price}, ${product.density}, ${product.sizes}, ${product.description}, ${product.tag ?? null}, ${product.status})
       `;
     }
     return { ok: true as const };

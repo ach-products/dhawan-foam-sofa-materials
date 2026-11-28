@@ -6,13 +6,8 @@ import { readFile } from "node:fs/promises";
 
 const sql = postgres(process.env.POSTGRES_URL_NON_POOLING ?? process.env.DATABASE_URL, { prepare: false });
 
-const pu = "/__l5e/assets-v1/8b199622-6022-4179-a5c9-bdc77671d88f/pu-foam.webp";
-const legs = "/__l5e/assets-v1/c56f6d52-7b0d-42fb-9061-3e87fa38d8e5/sofa-legs.png";
-const fabric = "/__l5e/assets-v1/f5fe9860-38fa-49ec-b5d0-ef6e3d84674f/upholstery-fabrics.png";
-const pins = "/__l5e/assets-v1/4b8dd7e6-c6e2-405e-a81b-61723eba3025/staple-pins.png";
-const glue = "/__l5e/assets-v1/8400e7b2-8aaa-4602-9983-5775adf969f2/foam-glue.png";
-const spray = "/__l5e/assets-v1/de98e8d7-6bfb-4a91-987e-5fc1ab97fb3a/spray-glue.png";
-const bucket = "/__l5e/assets-v1/a2480c89-ef3d-40ba-972e-63908bc34ed1/adhesive-bucket.png";
+// No stock photos are assigned here — every row starts with images: [] (an honest
+// "No photo yet" placeholder in the UI) until a real photo is uploaded via /admin.
 
 const CATEGORY_MAP = {
   Foam: "Foams",
@@ -62,7 +57,7 @@ function mapRow(raw) {
   const hasDensity = densityRaw && densityRaw !== "-";
   const type = titleCase(item);
 
-  let name, density, sizes, img, productPrice, productType = type;
+  let name, density, sizes, productPrice, productType = type;
 
   switch (category) {
     case "Foams": {
@@ -70,7 +65,6 @@ function mapRow(raw) {
       name = `${type} ${densityRaw} ${size}`;
       density = densityRaw;
       sizes = formatSize(sizeRaw);
-      img = pu;
       productPrice = price(raw.Rate, "sheet");
       break;
     }
@@ -80,7 +74,6 @@ function mapRow(raw) {
       productType = "Protector";
       density = "Protector";
       sizes = `${size} in`;
-      img = fabric;
       productPrice = price(raw.Rate, "piece");
       break;
     }
@@ -90,7 +83,6 @@ function mapRow(raw) {
       density = hasSize ? sizeFmt : "Standard";
       const { unit } = parseRate(raw.Rate);
       sizes = unit ? `Per ${unitWord(unit, "unit")}` : "Per unit";
-      img = pins;
       productPrice = price(raw.Rate, "unit");
       break;
     }
@@ -98,7 +90,6 @@ function mapRow(raw) {
       name = hasSize ? `${type} ${sizeRaw}` : `${type} Fabric`;
       density = type;
       sizes = hasSize ? sizeRaw : "Standard width";
-      img = fabric;
       productPrice = price(raw.Rate, "metre");
       break;
     }
@@ -106,7 +97,6 @@ function mapRow(raw) {
       density = /JOOT/i.test(item) ? "Jute" : /ELASTIK/i.test(item) ? "Elastic" : type;
       name = hasSize ? `${type} ${sizeRaw}` : type;
       sizes = hasSize ? sizeRaw : "Standard";
-      img = fabric;
       productPrice = price(raw.Rate, "metre");
       break;
     }
@@ -117,7 +107,6 @@ function mapRow(raw) {
       name = `Staple Pin ${titleCase(sizeRaw)} (${boxed ? "Box" : "Piece"})`;
       density = titleCase(sizeRaw);
       sizes = boxed ? "Per box" : "Per piece";
-      img = pins;
       productPrice = price(raw.Rate, "piece");
       break;
     }
@@ -127,7 +116,6 @@ function mapRow(raw) {
       name = `${finish} Sofa Leg ${sizeRaw}`;
       density = finish;
       sizes = sizeRaw;
-      img = legs;
       productPrice = price(raw.Rate, "piece");
       break;
     }
@@ -136,7 +124,6 @@ function mapRow(raw) {
       name = `${type} ${sizeFormatted}`;
       density = type;
       sizes = sizeFormatted;
-      img = /SPRAY/i.test(sizeRaw) || /SPRAY/i.test(item) ? spray : /FEVICOL/i.test(item) ? bucket : glue;
       productPrice = price(raw.Rate, sizeFormatted || "pack");
       break;
     }
@@ -150,7 +137,7 @@ function mapRow(raw) {
     name: name.replace(/\s+/g, " ").trim(),
     category,
     type: productType,
-    image: img,
+    images: [],
     price: productPrice,
     density,
     sizes,
@@ -187,8 +174,8 @@ try {
   await sql`delete from products`;
   for (const p of mapped) {
     await sql`
-      insert into products (slug, name, category, type, image, price, density, sizes, description, status)
-      values (${p.slug}, ${p.name}, ${p.category}, ${p.type}, ${p.image}, ${p.price}, ${p.density}, ${p.sizes}, ${p.description}, 'Published')
+      insert into products (slug, name, category, type, images, price, density, sizes, description, status)
+      values (${p.slug}, ${p.name}, ${p.category}, ${p.type}, ${sql.json(p.images)}, ${p.price}, ${p.density}, ${p.sizes}, ${p.description}, 'Published')
     `;
   }
   console.log(`Imported ${mapped.length} products, replacing previous catalogue.`);

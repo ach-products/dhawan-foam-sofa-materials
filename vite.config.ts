@@ -17,5 +17,5 @@ export default defineConfig({
   },
   // Only applies on Vercel's own build machines (VERCEL is set there, never inside the
   // Lovable sandbox), so Lovable's Cloudflare publishing is unaffected.
-  nitro: process.env.VERCEL ? { preset: "vercel" } : undefined,
+  ...(process.env["VERCEL"] ? { nitro: { preset: "vercel" } } : {}),
 });
