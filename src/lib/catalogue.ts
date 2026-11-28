@@ -51,30 +51,10 @@ export function primaryImage(p: { images: string[] }) { return p.images[0] ?? PL
 export function filterProducts(list: Product[], category: string, query: string, type = 'All types') {
  return list.filter(p => (category === 'All products' || p.category === category) && (type === 'All types' || p.type === type) && `${p.name} ${p.type}`.toLowerCase().includes(query.toLowerCase()));
 }
-const densityGrades = [18, 23, 28, 32, 40, 50, 60, 80, 100, 120];
-const thicknessGrades = [25, 50, 75, 100, 125, 150];
-function rangeOf(text: string): [number, number] | null { const n = text.match(/\d+/g)?.map(Number); if (!n?.length) return null; return [n[0]!, n[n.length - 1]!]; }
-export function foamOptions(p: Product) {
- if (p.category !== 'Foams') return null;
- const d = rangeOf(p.density), s = rangeOf(p.sizes);
- return {
-  densities: d ? densityGrades.filter(v => v >= d[0] && v <= d[1]).map(v => `${v} kg/m³`) : [],
-  thicknesses: s ? thicknessGrades.filter(v => v >= s[0] && v <= s[1]).map(v => `${v} mm`) : [],
-  sheetSizes: ['72 × 36 in', '72 × 48 in', '78 × 60 in', '78 × 72 in', 'Custom cut'],
- };
-}
-export function foamRate(p: Product, options?: string) {
- const base = priceInfo(p.price).amount; const fo = foamOptions(p); if (!fo || !options) return base;
- const [d, t, sz] = options.split(' · '); const num = (v?: string) => Number(v?.match(/[\d.]+/)?.[0]) || 0;
- const area = (v?: string) => { const m = v?.match(/(\d+) × (\d+)/); return m ? Number(m[1]) * Number(m[2]) : 0; };
- const bd = num(fo.densities[0]), bt = num(fo.thicknesses[0]), ba = area(fo.sheetSizes[0]);
- const k = (bd && num(d) ? num(d) / bd : 1) * (bt && num(t) ? num(t) / bt : 1) * (ba && area(sz) ? area(sz) / ba : 1);
- return Math.round(base * k);
-}
 export function priceInfo(price: string) { const amount = Number(price.replace(/[^\d.\/]/g, '').split('/')[0]) || 0; const unit = price.split('/')[1]?.trim() ?? 'unit'; return { amount, unit }; }
 export const formatINR = (n: number) => '₹' + n.toLocaleString('en-IN');
-export type BillLine = { name: string; options?: string; quantity: number; rate: number; unit: string; total: number };
-export function buildBill(list: Product[], items: { slug: string; quantity: number; options?: string }[]) {
- const lines: BillLine[] = items.flatMap(i => { const p = list.find(x => x.slug === i.slug); if (!p) return []; const { unit } = priceInfo(p.price); const amount = foamRate(p, i.options); return [{ name: p.name, ...(i.options ? { options: i.options } : {}), quantity: i.quantity, rate: amount, unit, total: amount * i.quantity }]; });
+export type BillLine = { name: string; quantity: number; rate: number; unit: string; total: number };
+export function buildBill(list: Product[], items: { slug: string; quantity: number }[]) {
+ const lines: BillLine[] = items.flatMap(i => { const p = list.find(x => x.slug === i.slug); if (!p) return []; const { amount, unit } = priceInfo(p.price); return [{ name: p.name, quantity: i.quantity, rate: amount, unit, total: amount * i.quantity }]; });
  return { lines, grandTotal: lines.reduce((s, l) => s + l.total, 0) };
 }

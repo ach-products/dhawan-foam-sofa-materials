@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 
 export const submitEnquiry = createServerFn({ method: "POST" })
-  .validator((data: { phone: string | null; items: { slug: string; quantity: number; options?: string }[]; grandTotal: number }) => data)
+  .validator((data: { phone: string | null; items: { slug: string; quantity: number }[]; grandTotal: number }) => data)
   .handler(async ({ data }) => {
     const { sql } = await import("@/lib/db.server");
     const rows = (await sql`

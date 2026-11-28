@@ -35,16 +35,5 @@ describe('Catalogue scope', () => {
     expect(filterProducts(products, 'Foams', '').filter(p => p.name.includes('Density')).map(p => p.density)).toEqual(['23 kg/m³', '32 kg/m³', '40 kg/m³']);
   });
 });
-import { foamOptions } from '@/lib/catalogue';
-describe('foam size and density options', () => {
-  it('offers densities inside the product range only', () => {
-    const p = products.find(p => p.slug === 'pu-foam-sheets')!;
-    expect(foamOptions(p)?.densities).toEqual(['18 kg/m³', '23 kg/m³', '28 kg/m³', '32 kg/m³', '40 kg/m³']);
-    expect(foamOptions(p)?.thicknesses).toEqual(['25 mm', '50 mm', '75 mm', '100 mm', '125 mm', '150 mm']);
-  });
-  it('gives no foam options for non-foam products', () => {
-    expect(foamOptions(products.find(p => p.category === 'Adhesives')!)).toBeNull();
-  });
-});
 import { buildBill as _bb } from '@/lib/catalogue';
 describe('bill', () => { it('multiplies fixed rate by quantity', () => { const b = _bb(products, [{ slug: 'pu-foam-sheets', quantity: 10 }, { slug: 'bulk-adhesive-drum-pack', quantity: 2 }]); expect(b.lines[0]!.total).toBe(2800); expect(b.grandTotal).toBe(2800 + 7600); }); });
