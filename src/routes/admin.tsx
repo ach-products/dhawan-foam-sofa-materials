@@ -39,7 +39,7 @@ function AdminPanel() {
   async function refresh() { const [products, cats] = await Promise.all([listAllProducts(), listCategories()]); setItems(products); setCategories(cats); }
   useEffect(() => { refresh().finally(() => setLoading(false)); }, []);
   const published = items.filter(p => p.status === 'Published').length;
-  const filtered = items.filter(p => `${p.name} ${p.type}`.toLowerCase().includes(query.toLowerCase()) && (category === 'All categories' || p.category === category) && (status === 'All statuses' || p.status === status));
+  const filtered = items.filter(p => `${p.name} ${p.type} ${p.density} ${p.sizes}`.toLowerCase().includes(query.toLowerCase()) && (category === 'All categories' || p.category === category) && (status === 'All statuses' || p.status === status));
   const sorted = sort === 'Name A–Z' ? [...filtered].sort((a, b) => a.name.localeCompare(b.name)) : filtered;
   const pages = Math.max(1, Math.ceil(sorted.length / 6));
   const currentPage = Math.min(page, pages);

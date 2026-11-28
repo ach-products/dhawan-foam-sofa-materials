@@ -41,7 +41,7 @@ export const products: Product[] = [
 export const PLACEHOLDER_IMAGE = '/placeholder-product.svg';
 export function primaryImage(p: { images: string[] }) { return p.images[0] ?? PLACEHOLDER_IMAGE; }
 export function filterProducts(list: Product[], category: string, query: string, type = 'All types') {
- return list.filter(p => (category === 'All products' || p.category === category) && (type === 'All types' || p.type === type) && `${p.name} ${p.type}`.toLowerCase().includes(query.toLowerCase()));
+ return list.filter(p => (category === 'All products' || p.category === category) && (type === 'All types' || p.type === type) && `${p.name} ${p.type} ${p.density} ${p.sizes}`.toLowerCase().includes(query.toLowerCase()));
 }
 export function priceInfo(price: string) { const amount = Number(price.replace(/[^\d.\/]/g, '').split('/')[0]) || 0; const unit = price.split('/')[1]?.trim() ?? 'unit'; return { amount, unit }; }
 export const formatINR = (n: number) => '₹' + n.toLocaleString('en-IN');
