@@ -52,11 +52,15 @@ function toDbProduct(row: ProductRow): DbProduct {
   };
 }
 
-export const listAllProducts = createServerFn({ method: "GET" }).handler(async () => {
-  const { sql } = await import("@/lib/db.server");
-  const rows = (await sql`select * from products order by updated_at desc`) as unknown as ProductRow[];
-  return rows.map(toDbProduct);
-});
+export const listAllProducts = createServerFn({ method: "GET" })
+  .validator((data: { token: string | null }) => data)
+  .handler(async ({ data }) => {
+    const { requireAdmin } = await import("@/lib/admin-auth.server");
+    requireAdmin(data.token);
+    const { sql } = await import("@/lib/db.server");
+    const rows = (await sql`select * from products order by updated_at desc`) as unknown as ProductRow[];
+    return rows.map(toDbProduct);
+  });
 
 // Public: only published products, for the live catalogue and product detail pages.
 export const listPublicProducts = createServerFn({ method: "GET" }).handler(async () => {
@@ -66,8 +70,10 @@ export const listPublicProducts = createServerFn({ method: "GET" }).handler(asyn
 });
 
 export const saveProduct = createServerFn({ method: "POST" })
-  .validator((data: { product: DbProduct; originalSlug?: string }) => data)
+  .validator((data: { product: DbProduct; originalSlug?: string; token: string | null }) => data)
   .handler(async ({ data }) => {
+    const { requireAdmin } = await import("@/lib/admin-auth.server");
+    requireAdmin(data.token);
     const { sql } = await import("@/lib/db.server");
     const { product, originalSlug } = data;
 
@@ -96,8 +102,10 @@ export const saveProduct = createServerFn({ method: "POST" })
   });
 
 export const deleteProducts = createServerFn({ method: "POST" })
-  .validator((data: { slugs: string[] }) => data)
+  .validator((data: { slugs: string[]; token: string | null }) => data)
   .handler(async ({ data }) => {
+    const { requireAdmin } = await import("@/lib/admin-auth.server");
+    requireAdmin(data.token);
     const { sql } = await import("@/lib/db.server");
     await sql`delete from products where slug = any(${data.slugs})`;
     return { ok: true as const };

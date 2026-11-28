@@ -40,8 +40,13 @@ export const products: Product[] = [
 ];
 export const PLACEHOLDER_IMAGE = '/placeholder-product.svg';
 export function primaryImage(p: { images: string[] }) { return p.images[0] ?? PLACEHOLDER_IMAGE; }
+export function categorySlug(name: string) { return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+// Treats ×, x/X and * as the same separator, so "72×35×20mm" matches a search for "72*35*20mm"
+// or "72x35x20mm" just as well.
+export function normalizeForSearch(s: string) { return s.toLowerCase().replace(/[×x*]/g, 'x'); }
 export function filterProducts(list: Product[], category: string, query: string, type = 'All types') {
- return list.filter(p => (category === 'All products' || p.category === category) && (type === 'All types' || p.type === type) && `${p.name} ${p.type} ${p.density} ${p.sizes}`.toLowerCase().includes(query.toLowerCase()));
+ const needle = normalizeForSearch(query);
+ return list.filter(p => (category === 'All products' || p.category === category) && (type === 'All types' || p.type === type) && normalizeForSearch(`${p.name} ${p.type} ${p.density} ${p.sizes}`).includes(needle));
 }
 export function priceInfo(price: string) { const amount = Number(price.replace(/[^\d.\/]/g, '').split('/')[0]) || 0; const unit = price.split('/')[1]?.trim() ?? 'unit'; return { amount, unit }; }
 export const formatINR = (n: number) => '₹' + n.toLocaleString('en-IN');

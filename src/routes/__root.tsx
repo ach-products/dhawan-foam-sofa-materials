@@ -14,6 +14,7 @@ import { useEffect, useState, type ReactNode } from "react";
 
 import { CatalogueShell } from "@/components/catalogue-shell";
 import { getDemoPhone } from "@/lib/mock-auth";
+import { getAdminToken } from "@/lib/admin-session";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -139,16 +140,33 @@ function RequireLogin({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
+function RequireAdmin({ children }: { children: ReactNode }) {
+  const navigate = useNavigate();
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    function check() {
+      if (getAdminToken()) setReady(true);
+      else navigate({ to: "/admin-login" });
+    }
+    check();
+    window.addEventListener("admin-auth", check);
+    return () => window.removeEventListener("admin-auth", check);
+  }, [navigate]);
+  if (!ready) return <div className="page-width auth-gate">Checking your admin session…</div>;
+  return <>{children}</>;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useLocation({ select: location => location.pathname });
   const isAdmin = pathname === "/admin";
+  const isAdminLogin = pathname === "/admin-login";
   const isLogin = pathname === "/login";
 
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      {isAdmin ? <Outlet /> : (
+      {isAdmin ? <RequireAdmin><Outlet /></RequireAdmin> : isAdminLogin ? <Outlet /> : (
         <CatalogueShell>
           {isLogin ? <Outlet /> : <RequireLogin><Outlet /></RequireLogin>}
         </CatalogueShell>

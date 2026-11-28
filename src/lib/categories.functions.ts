@@ -17,8 +17,10 @@ export const listCategories = createServerFn({ method: "GET" }).handler(async ()
 });
 
 export const saveCategory = createServerFn({ method: "POST" })
-  .validator((data: { category: Category; originalName?: string }) => data)
+  .validator((data: { category: Category; originalName?: string; token: string | null }) => data)
   .handler(async ({ data }) => {
+    const { requireAdmin } = await import("@/lib/admin-auth.server");
+    requireAdmin(data.token);
     const { sql } = await import("@/lib/db.server");
     const { category, originalName } = data;
 
@@ -49,8 +51,10 @@ export const saveCategory = createServerFn({ method: "POST" })
   });
 
 export const deleteCategory = createServerFn({ method: "POST" })
-  .validator((data: { name: string }) => data)
+  .validator((data: { name: string; token: string | null }) => data)
   .handler(async ({ data }) => {
+    const { requireAdmin } = await import("@/lib/admin-auth.server");
+    requireAdmin(data.token);
     const { sql } = await import("@/lib/db.server");
     const inUse = await sql`select count(*)::int as n from products where category = ${data.name}`;
     const n = (inUse[0] as { n: number }).n;
