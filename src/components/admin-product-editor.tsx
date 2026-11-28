@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { ImagePlus, Save, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,6 +13,10 @@ export function AdminProductEditor({ product, categories, onSave, onClose }: { p
   const [form, setForm] = useState<AdminProduct>(product ?? { slug: '', name: '', category: categories[0]?.name ?? '', type: '', price: '', density: '', sizes: '', description: '', images: [], tag: '', status: 'Draft', updated: '' });
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  // Categories can still be loading when this editor first mounts (e.g. a fast click on
+  // "Add product"), which would otherwise leave a new product's category stuck at "". Fill
+  // it in as soon as categories are available, unless the user already chose one.
+  useEffect(() => { if (!product && !form.category && categories.length > 0) setForm(f => ({ ...f, category: categories[0]!.name })); }, [categories, product, form.category]);
   function field<K extends keyof AdminProduct>(key: K, value: AdminProduct[K]) { setForm(p => ({ ...p, [key]: value })); }
   function addPhoto(file: File) {
     if (!file.type.startsWith('image/') || file.size > 10 * 1024 * 1024) { setError('Choose an image smaller than 10 MB.'); return; }
@@ -21,7 +25,14 @@ export function AdminProductEditor({ product, categories, onSave, onClose }: { p
     reader.readAsDataURL(file);
   }
   function removePhoto(index: number) { setForm(p => ({ ...p, images: p.images.filter((_, i) => i !== index) })); }
-  async function submit(e: FormEvent) { e.preventDefault(); setBusy(true); const result = await onSave(form); setBusy(false); if (result) setError(result); }
+  async function submit(e: FormEvent) {
+    e.preventDefault();
+    if (!form.category) { setError('Choose a category.'); return; }
+    setBusy(true);
+    const result = await onSave(form);
+    setBusy(false);
+    if (result) setError(result);
+  }
   return <Dialog open onOpenChange={open => { if (!open) onClose(); }}><DialogContent className="admin-editor"><DialogTitle>{product ? 'Edit product' : 'Add product'}</DialogTitle><DialogDescription>Changes save to the product catalogue.</DialogDescription>
     <form onSubmit={submit} className="admin-product-form">
       <div className="admin-photos-field">
@@ -34,7 +45,7 @@ export function AdminProductEditor({ product, categories, onSave, onClose }: { p
         <span className="text-xs text-muted-foreground">JPG, PNG or WebP · first photo is used as the primary thumbnail</span>
       </div>
       <label>Product name<Input required value={form.name} onChange={e => { const name = e.target.value; setForm(p => ({ ...p, name, ...(!product ? { slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') } : {}) })); }} /></label>
-      <div className="admin-form-columns"><label>Category<select value={form.category} onChange={e => field('category', e.target.value)}>{categories.map(c => <option key={c.name}>{c.name}</option>)}</select></label><label>Material / type<Input required value={form.type} onChange={e => field('type', e.target.value)} /></label></div>
+      <div className="admin-form-columns"><label>Category<select required value={form.category} onChange={e => field('category', e.target.value)}>{!form.category && <option value="" disabled>{categories.length ? 'Choose a category' : 'Loading categories…'}</option>}{categories.map(c => <option key={c.name}>{c.name}</option>)}</select></label><label>Material / type<Input required value={form.type} onChange={e => field('type', e.target.value)} /></label></div>
       <label>Price (e.g. ₹280 / sheet)<Input required value={form.price} onChange={e => field('price', e.target.value)} placeholder="₹280 / sheet" /></label>
       <div className="admin-form-columns"><label>{categories.find(c => c.name === form.category)?.specification ?? 'Specification'}<Input required value={form.density} onChange={e => field('density', e.target.value)}  /></label><label>{categories.find(c => c.name === form.category)?.size ?? 'Size'}<Input required value={form.sizes} onChange={e => field('sizes', e.target.value)}  /></label></div>
       <label>Description<Textarea required rows={3} value={form.description} onChange={e => field('description', e.target.value)} /></label>
